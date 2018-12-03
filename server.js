@@ -8,7 +8,6 @@ const bodyParser= require('body-parser')
 const app = express();
 const routes = require('./routes/routes');
 var mongodb = require('./config/mongodb_connector');
-const config = require('./config/mongodb_config');
 
 app.use(bodyParser.json());
 routes(app);
@@ -16,5 +15,8 @@ routes(app);
 app.listen(process.env.PORT || 3000, () => {
     console.log('App is ready for requests.')
   })
+  .on('error', (error) => {
+    console.warn('Warning', error.toString());
+});
 
 module.exports = app;

@@ -12,11 +12,47 @@ function create(req, res){
             if (err.name == 'MongoError' && err.code == 11000) {
                 res.status(401).send({ Error: 'Username is taken.'});
             } else {
-                res.status(401).send({ Error: err});
+                res.status(401).send({err});
             }
     });
 };
 
+function edit(req, res){
+    User.findOne( { name: req.body.name } )
+    .then(user => {
+        if(user === null){
+            res.status(401).send({ Error :'User does not exist.'})
+        }
+        if(user.password !== req.body.password){
+            res.status(401).send({ Error :'Current password does not match.'})
+        }
+        else {
+            user.set('password', req.body.newPassword)
+            user.save()
+            .then(user => res.status(200).send({Message: "password changed succesfully"}))
+            .catch((err) => res.status(401).send({err}));
+        }
+    });
+};
+
+function remove(req, res){
+    User.findOne( { name: req.body.name } )
+    .then(user => {
+        if(user === null){
+            res.status(401).send({ Error :'User does not exist.'})
+        }
+        if(user.password !== req.body.password){
+            res.status(401).send({ Error :'Current password does not match.'})
+        }
+        else {
+            user.delete()
+            .then(() => res.status(200).send({ Message :'User succesfully removed.'}));
+        }
+    });
+};
+
 module.exports = {
-    create
+    create,
+    edit,
+    remove
 }
