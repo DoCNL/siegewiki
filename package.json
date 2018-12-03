@@ -1,0 +1,19 @@
+{
+  "name": "siegewiki",
+  "version": "1.0.0",
+  "description": "A wikipedia for r6: siege updates",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DoCNL/siegewiki.git"
+  },
+  "author": "Sjoerd van der Bok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DoCNL/siegewiki/issues"
+  },
+  "homepage": "https://github.com/DoCNL/siegewiki#readme"
+}
