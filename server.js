@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 routes(app);
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log('App is ready for requests on ' + process.env.PORT || 3000)
+    console.log('App is ready for requests.')
   })
 
 module.exports = app;
