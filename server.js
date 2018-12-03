@@ -13,8 +13,8 @@ const config = require('./config/mongodb_config');
 app.use(bodyParser.json());
 routes(app);
 
-app.listen(3000, () => {
-    console.log('App is ready for requests on localhost:3000 or heroku')
+app.listen(process.env.PORT || 3000, () => {
+    console.log('App is ready for requests on ' + process.env.PORT || 3000)
   })
 
 module.exports = app;
