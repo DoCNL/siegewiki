@@ -25,8 +25,14 @@ const SeasonSchema = new Schema({
         },
         required: [true, 'Season year is required.']
     },
-    operators: [Operator],
-    map: SiegeMap
+    operators: [{
+        type: Schema.Types.ObjectId,
+        ref: 'operator'
+    }],
+    map: {
+        type: Schema.Types.ObjectId,
+        ref: 'siegemap'
+    }
 });
 
 const Season = mongoose.model('season', SeasonSchema);

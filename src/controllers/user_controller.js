@@ -7,7 +7,7 @@ function create(req, res){
     })  
     .then(() =>
         res.status(200).send({Message: "User created succesfully."}),
-        console.log('user saved'))
+        console.log('>>user saved'))
     .catch((err) => {
             if (err.name == 'MongoError' && err.code == 11000) {
                 res.status(401).send({ Error: 'Username is taken.'});
@@ -29,7 +29,7 @@ function edit(req, res){
         else {
             user.set('password', req.body.newPassword)
             user.save()
-            .then(user => res.status(200).send({Message: "password changed succesfully"}))
+            .then(() => res.status(200).send({Message: "password changed succesfully"}))
             .catch((err) => res.status(401).send({err}));
         }
     });
