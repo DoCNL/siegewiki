@@ -34,4 +34,6 @@ module.exports = (app) => {
     app.post('/api/operator', OperatorController.create);
     //edit an existing operator with 'id, name, description, imageLink, side'
     app.put('/api/operator', OperatorController.edit);
+    //remove an existing operator with 'id'
+    app.delete('/api/operator', OperatorController.remove);
 };

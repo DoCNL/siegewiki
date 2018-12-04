@@ -5,9 +5,10 @@ function create(req, res) {
         name: req.body.name,
         password: req.body.password
     })  
-    .then(() =>
+    .then(() => {
         res.status(200).send({Message: "User created succesfully."}),
-        console.log('>>user saved'))
+        console.log('>>user created');
+    })
     .catch((err) => {
             if (err.name == 'MongoError' && err.code == 11000) {
                 res.status(401).send({ Error: 'Username is taken.'});
@@ -29,7 +30,10 @@ function edit(req, res) {
         else {
             user.set(password, req.body.newPassword)
             user.save()
-            .then(() => res.status(200).send({Message: "password changed succesfully"}))
+            .then(() => {
+                res.status(200).send({Message: "password changed succesfully"})
+                console.log('>>user edited')
+            })
             .catch((err) => res.status(401).send({err}));
         }
     });
@@ -46,7 +50,10 @@ function remove(req, res) {
         }
         else {
             user.delete()
-            .then(() => res.status(200).send({ Message :'User succesfully removed.'}));
+            .then(() => {
+                res.status(200).send({ Message :'User succesfully removed.'})
+                console.log('>>user removed')
+            });
         }
     });
 };
