@@ -29,20 +29,20 @@ function create(req, res) {
 };
 
 function edit(req, res) {
-    Season.findOne( { _id: req.body.id } )
-    .then(season => {
-        if(season === null){
-            res.status(401).send({ Error :'Season does not exist.'})
+    Operator.findOne( { _id: req.body.id } )
+    .then(operator => {
+        if(operator === null){
+            res.status(401).send({ Error :'Operator does not exist.'})
         }
         else {
-            season.set({
+            operator.set({
                 name: req.body.name,
                 description: req.body.description,
                 imageLink: req.body.imageLink,
-                year: req.body.year
+                side: req.body.side
             })
-            season.save()
-            .then(() => res.status(200).send({Message: "Season edited succesfully"}))
+            operator.save()
+            .then(() => res.status(200).send({Message: "Operator edited succesfully"}))
             .catch((err) => res.status(401).send({err}));
         }
     });
