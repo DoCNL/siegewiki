@@ -28,15 +28,22 @@ function edit(req, res){
             res.status(401).send({ Error :'Season does not exist.'})
         }
         else {
-            season.set({
-                'name': req.body.name,
-                'description': req.body.description,
-                'imageLink': req.body.imageLink,
-                'year': req.body.year
+            Operator.findById(req.body.operatorId)
+            .then(operator => {
+                season.set({
+                    name: req.body.name,
+                    description: req.body.description,
+                    imageLink: req.body.imageLink,
+                    year: req.body.year
+                })
+                season.operators.push(operator);
+                season.save()
+                .then(() => res.status(200).send({Message: "Season edited succesfully"}))
+                .catch((err) => res.status(401).send({err}));
             })
-            season.save()
-            .then(() => res.status(200).send({Message: "Season edited succesfully"}))
-            .catch((err) => res.status(401).send({err}));
+            .catch(err => {
+                res.status(401).send(err)
+            });
         }
     });
 };

@@ -2,7 +2,8 @@ const Season = require('../models/season');
 const Operator = require('../models/operator');
 const SiegeMap = require('../models/siegemap');
 
-function create(res, req) {
+function create(req, res) {
+    console.log(req.body);
     Operator.create({
         name: req.body.name,
         description: req.body.description,
@@ -21,6 +22,27 @@ function create(res, req) {
     });
 }
 
+function edit(req, res){
+    Season.findOne( { _id: req.body.id } )
+    .then(season => {
+        if(season === null){
+            res.status(401).send({ Error :'Season does not exist.'})
+        }
+        else {
+            season.set({
+                name: req.body.name,
+                description: req.body.description,
+                imageLink: req.body.imageLink,
+                year: req.body.year
+            })
+            season.save()
+            .then(() => res.status(200).send({Message: "Season edited succesfully"}))
+            .catch((err) => res.status(401).send({err}));
+        }
+    });
+};
+
 module.exports = {
-    create
+    create,
+    edit
 }

@@ -27,7 +27,7 @@ function edit(req, res){
             res.status(401).send({ Error :'Current password does not match.'})
         }
         else {
-            user.set('password', req.body.newPassword)
+            user.set(password, req.body.newPassword)
             user.save()
             .then(() => res.status(200).send({Message: "password changed succesfully"}))
             .catch((err) => res.status(401).send({err}));
