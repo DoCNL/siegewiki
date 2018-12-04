@@ -12,12 +12,8 @@ var dburl = process.env.NODE_ENV === 'production' ?
 
 var dburl_dev = 'mongodb://sabok:Potato1@ds061938.mlab.com:61938/siege_db';
 
-var connectionMethod = process.env.NODE_ENV === 'production' ?
-    'heroku' : 'localhost:3000'
-
 module.exports = {
     env,
     dburl,
-    dburl_dev,
-    connectionMethod
+    dburl_dev
 };

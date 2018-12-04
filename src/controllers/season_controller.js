@@ -7,9 +7,7 @@ function create(req, res){
         name: req.body.name,
         description: req.body.description,
         imageLink: req.body.imageLink,
-        year: req.body.year//,
-        // operators: '',
-        // map: ''
+        year: req.body.year
     })  
     .then(() =>
         res.status(200).send({Message: "Season created succesfully."}),
@@ -43,7 +41,21 @@ function edit(req, res){
     });
 };
 
+function remove(req, res) {
+    Season.findOne( { name: req.body.name } )
+    .then(season => {
+        if(season === null){
+            res.status(401).send({ Error :'Season does not exist.'})
+        }
+        else {
+            season.delete()
+            .then(() => res.status(200).send({ Message :'Season succesfully removed.'}));
+        }
+    });
+}
+
 module.exports = {
     create,
-    edit
+    edit,
+    remove
 }

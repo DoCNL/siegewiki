@@ -17,8 +17,10 @@ const OperatorSchema = new Schema({
         required: [true, 'Link an online image to describe the operator.']
     },
     season: {
-        type: Season,
-        required: [true, 'Operator season is required.']
+        type: {
+            type: Schema.Types.ObjectId,
+            ref: 'season'
+        }
     },
     side: {
         type: String,
