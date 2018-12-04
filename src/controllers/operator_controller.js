@@ -1,6 +1,12 @@
 const Season = require('../models/season');
 const Operator = require('../models/operator');
-const SiegeMap = require('../models/siegemap');
+
+function getAll(req, res) {
+    Operator.find({})
+        .then(operators => {
+            res.status(200).send(operators);
+        });
+};
 
 function create(req, res) {
     console.log(req.body);
@@ -20,9 +26,9 @@ function create(req, res) {
                 res.status(401).send({err});
             }
     });
-}
+};
 
-function edit(req, res){
+function edit(req, res) {
     Season.findOne( { _id: req.body.id } )
     .then(season => {
         if(season === null){
@@ -43,6 +49,7 @@ function edit(req, res){
 };
 
 module.exports = {
+    getAll,
     create,
     edit
 }
