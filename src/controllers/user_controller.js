@@ -1,6 +1,6 @@
 const User = require('../models/user');
 
-function create(req, res){
+function create(req, res) {
     User.create({
         name: req.body.name,
         password: req.body.password
@@ -17,7 +17,7 @@ function create(req, res){
     });
 };
 
-function edit(req, res){
+function edit(req, res) {
     User.findOne( { name: req.body.name } )
     .then(user => {
         if(user === null){
@@ -35,7 +35,7 @@ function edit(req, res){
     });
 };
 
-function remove(req, res){
+function remove(req, res) {
     User.findOne( { name: req.body.name } )
     .then(user => {
         if(user === null){

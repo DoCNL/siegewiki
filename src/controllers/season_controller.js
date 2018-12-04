@@ -2,7 +2,15 @@ const Season = require('../models/season');
 const Operator = require('../models/operator');
 const SiegeMap = require('../models/siegemap');
 
-function create(req, res){
+function getAll(req, res) {
+    Season.find({})
+        .then(seasons => {
+            res.status(200).send(seasons);
+        });
+};
+
+
+function create(req, res) {
     Season.create({
         name: req.body.name,
         description: req.body.description,
@@ -21,7 +29,7 @@ function create(req, res){
     });
 };
 
-function edit(req, res){
+function edit(req, res) {
     Season.findOne( { _id: req.body.id } )
     .then(season => {
         if(season === null){
@@ -59,9 +67,10 @@ function remove(req, res) {
             .then(() => res.status(200).send({ Message :'Season succesfully removed.'}));
         }
     });
-}
+};
 
 module.exports = {
+    getAll,
     create,
     edit,
     remove

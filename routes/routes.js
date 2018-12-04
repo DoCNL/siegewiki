@@ -16,6 +16,8 @@ module.exports = (app) => {
     //
     //Season routes
     //
+    //get all seasons
+    app.get('/api/seasons', SeasonController.getAll);
     //create a new season with 'name, description, imageLink, year'
     app.post('/api/season', SeasonController.create);
     //edit an existing season with 'id, name, description, imageLink, year'
@@ -26,6 +28,10 @@ module.exports = (app) => {
     //
     //Operator routes
     //
+    //get all operators
+    app.get('/api/operators', OperatorController.getAll);
     //create a new operator with 'name, description, imageLink, side'
     app.post('/api/operator', OperatorController.create);
+    //edit an existing operator with 'id, name, description, imageLink, side'
+    app.put('/api/operator', OperatorController.edit);
 };
