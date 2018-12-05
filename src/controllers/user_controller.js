@@ -1,9 +1,12 @@
 const User = require('../models/user');
+var bcrypt = require('bcryptjs');
+var auth = require('./auth_controller');
 
 function create(req, res) {
+    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
     User.create({
         name: req.body.name,
-        password: req.body.password
+        password: hashedPassword
     })  
     .then(() =>
         res.status(200).send({Message: "User created succesfully."}),
@@ -23,7 +26,8 @@ function edit(req, res) {
         if(user === null){
             res.status(401).send({ Error :'User does not exist.'})
         }
-        if(user.password !== req.body.password){
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if(!passwordIsValid){
             res.status(401).send({ Error :'Current password does not match.'})
         }
         else {
@@ -41,7 +45,8 @@ function remove(req, res) {
         if(user === null){
             res.status(401).send({ Error :'User does not exist.'})
         }
-        if(user.password !== req.body.password){
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if(!passwordIsValid){
             res.status(401).send({ Error :'Current password does not match.'})
         }
         else {

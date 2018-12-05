@@ -1,14 +1,15 @@
 const Season = require('../models/season');
 const Operator = require('../models/operator');
 const SiegeMap = require('../models/siegemap');
+var auth = require('./auth_controller');
 
 function getAll(req, res) {
     Season.find({})
         .then(seasons => {
             res.status(200).send(seasons);
+            console.log('>>seasons returned');
         });
 };
-
 
 function create(req, res) {
     Season.create({
@@ -19,7 +20,7 @@ function create(req, res) {
     })  
     .then(() =>
         res.status(200).send({Message: "Season created succesfully."}),
-        console.log('>>season saved'))
+        console.log('>>season created'))
     .catch((err) => {
             if (err.name == 'MongoError' && err.code == 11000) {
                 res.status(401).send({ Error: 'Seasonname is already in use.'});
@@ -46,7 +47,10 @@ function edit(req, res) {
                 })
                 season.operators.push(operator);
                 season.save()
-                .then(() => res.status(200).send({Message: "Season edited succesfully"}))
+                .then(() => {
+                    res.status(200).send({Message: "Season edited succesfully"})
+                    console.log('>>season edited')
+                })
                 .catch((err) => res.status(401).send({err}));
             })
             .catch(err => {
@@ -64,7 +68,10 @@ function remove(req, res) {
         }
         else {
             season.delete()
-            .then(() => res.status(200).send({ Message :'Season succesfully removed.'}));
+            .then(() => {
+                res.status(200).send({ Message :'Season succesfully removed.'})
+                console.log('>>season removed')
+            });
         }
     });
 };
