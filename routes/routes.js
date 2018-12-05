@@ -1,6 +1,7 @@
 const UserController = require('../src/controllers/user_controller');
 const SeasonController = require('../src/controllers/season_controller');
 const OperatorController = require('../src/controllers/operator_controller');
+const MapController = require('../src/controllers/siegemap_controller');
 const AuthController = require('../src/controllers/auth_controller');
 
 module.exports = (app) => {
@@ -43,4 +44,16 @@ module.exports = (app) => {
     app.put('/api/operator/', AuthController.validateToken, OperatorController.edit);
     //remove an existing operator with 'id'
     app.delete('/api/operator/', AuthController.validateToken, OperatorController.remove);
+
+    //
+    //Siegemap routes
+    //
+    //get all siegemaps
+    app.get('/api/siegemaps/', MapController.getAll);
+    //create a new siegemap with 'name, description, imageLink, ranked'
+    app.post('/api/siegemap/', MapController.create);
+    //edit an existing siegemap with 'id, name, description, imageLink, ranked'
+    app.put('/api/siegemap/', MapController.edit);
+    //remove an existing siegemap with 'id'
+    app.delete('/api/siegemap/', MapController.remove);
 };

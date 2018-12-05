@@ -8,6 +8,7 @@ const bodyParser= require('body-parser')
 const app = express();
 const routes = require('./routes/routes');
 var mongodb = require('./config/mongodb_connector');
+var defS = require('./config/default_data');
 
 app.use(bodyParser.json());
 routes(app);
@@ -18,5 +19,7 @@ app.listen(process.env.PORT || 3000, () => {
   .on('error', (error) => {
     console.warn('Warning', error.toString());
 });
+
+defS.addDefaultSeason();
 
 module.exports = app;

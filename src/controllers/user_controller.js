@@ -1,6 +1,5 @@
 const User = require('../models/user');
 var bcrypt = require('bcryptjs');
-var auth = require('./auth_controller');
 
 function create(req, res) {
     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
