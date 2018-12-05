@@ -3,7 +3,6 @@ const Operator = require('../models/operator');
 const SiegeMap = require('../models/siegemap');
 var auth = require('./auth_controller');
 
-//no authentication required
 function getAll(req, res) {
     Season.find({})
         .then(seasons => {
@@ -12,10 +11,7 @@ function getAll(req, res) {
         });
 };
 
-
-//requires a valid token
 function create(req, res) {
-    auth.validateToken(req, res);
     Season.create({
         name: req.body.name,
         description: req.body.description,
@@ -34,9 +30,7 @@ function create(req, res) {
     });
 };
 
-//requires a valid token
 function edit(req, res) {
-    auth.validateToken(req, res);
     Season.findOne( { _id: req.body.id } )
     .then(season => {
         if(season === null){
@@ -66,9 +60,7 @@ function edit(req, res) {
     });
 };
 
-//requires a valid token
 function remove(req, res) {
-    auth.validateToken(req, res);
     Season.findOne( { name: req.body.name } )
     .then(season => {
         if(season === null){

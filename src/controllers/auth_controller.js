@@ -22,7 +22,7 @@ function login(req, res) {
     });
 }
 
-function validateToken(req, res) {
+function validateToken(req, res, next) {
     var token = req.headers['x-access-token'];
     console.log(token)
     if (!token) return res.status(401).send({ Error :'No token provided.'})
@@ -30,7 +30,7 @@ function validateToken(req, res) {
     jwt.verify(token, config.secret, function(err, decoded) {
         console.log(decoded)
       if (err) return res.status(401).send({ Error :'Token is invalid.'})
-      if (decoded) return console.log('valid token')
+      if (decoded) next();
     });
 }
 

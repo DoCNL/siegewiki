@@ -2,7 +2,6 @@ const User = require('../models/user');
 var bcrypt = require('bcryptjs');
 var auth = require('./auth_controller');
 
-//no authentication required
 function create(req, res) {
     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
     User.create({
@@ -21,9 +20,7 @@ function create(req, res) {
     });
 };
 
-//requires a valid token
 function edit(req, res) {
-    auth.validateToken(req, res);
     User.findOne( { name: req.body.name } )
     .then(user => {
         if(user === null){
@@ -42,9 +39,7 @@ function edit(req, res) {
     });
 };
 
-//requires a valid token
 function remove(req, res) {
-    auth.validateToken(req, res);
     User.findOne( { name: req.body.name } )
     .then(user => {
         if(user === null){

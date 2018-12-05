@@ -2,7 +2,6 @@ const Season = require('../models/season');
 const Operator = require('../models/operator');
 var auth = require('./auth_controller');
 
-//no authentication required
 function getAll(req, res) {
     Operator.find({})
         .then(operators => {
@@ -11,9 +10,7 @@ function getAll(req, res) {
         });
 };
 
-//requires a valid token
 function create(req, res) {
-    auth.validateToken(req, res);
     Operator.create({
         name: req.body.name,
         description: req.body.description,
@@ -32,9 +29,7 @@ function create(req, res) {
     });
 };
 
-//requires a valid token
 function edit(req, res) {
-    auth.validateToken(req, res);
     Operator.findOne( { _id: req.body.id } )
     .then(operator => {
         if(operator === null){
@@ -57,9 +52,7 @@ function edit(req, res) {
     });
 };
 
-//requires a valid token
 function remove(req, res) {
-    auth.validateToken(req, res);
     Operator.findOne( { _id: req.body.id } )
     .then(operator => {
         if(operator === null){
