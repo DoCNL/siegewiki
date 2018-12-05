@@ -1,14 +1,17 @@
 const User = require('../models/user');
+var bcrypt = require('bcryptjs');
+var auth = require('./auth_controller');
 
+//no authentication required
 function create(req, res) {
+    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
     User.create({
         name: req.body.name,
-        password: req.body.password
+        password: hashedPassword
     })  
-    .then(() => {
+    .then(() =>
         res.status(200).send({Message: "User created succesfully."}),
-        console.log('>>user created');
-    })
+        console.log('>>user saved'))
     .catch((err) => {
             if (err.name == 'MongoError' && err.code == 11000) {
                 res.status(401).send({ Error: 'Username is taken.'});
@@ -18,42 +21,42 @@ function create(req, res) {
     });
 };
 
+//requires a valid token
 function edit(req, res) {
+    auth.validateToken(req, res);
     User.findOne( { name: req.body.name } )
     .then(user => {
         if(user === null){
             res.status(401).send({ Error :'User does not exist.'})
         }
-        if(user.password !== req.body.password){
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if(!passwordIsValid){
             res.status(401).send({ Error :'Current password does not match.'})
         }
         else {
             user.set(password, req.body.newPassword)
             user.save()
-            .then(() => {
-                res.status(200).send({Message: "password changed succesfully"})
-                console.log('>>user edited')
-            })
+            .then(() => res.status(200).send({Message: "password changed succesfully"}))
             .catch((err) => res.status(401).send({err}));
         }
     });
 };
 
+//requires a valid token
 function remove(req, res) {
+    auth.validateToken(req, res);
     User.findOne( { name: req.body.name } )
     .then(user => {
         if(user === null){
             res.status(401).send({ Error :'User does not exist.'})
         }
-        if(user.password !== req.body.password){
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if(!passwordIsValid){
             res.status(401).send({ Error :'Current password does not match.'})
         }
         else {
             user.delete()
-            .then(() => {
-                res.status(200).send({ Message :'User succesfully removed.'})
-                console.log('>>user removed')
-            });
+            .then(() => res.status(200).send({ Message :'User succesfully removed.'}));
         }
     });
 };

@@ -1,39 +1,45 @@
 const UserController = require('../src/controllers/user_controller');
 const SeasonController = require('../src/controllers/season_controller');
 const OperatorController = require('../src/controllers/operator_controller');
-
+const AuthController = require('../src/controllers/auth_controller');
 module.exports = (app) => {
+    //
+    //Login routes
+    //
+    //create a new user with 'name, password'
+    app.post('/api/user/register', UserController.create);
+    //create a token with 'name, password'
+    app.post('/api/user/login', AuthController.login);
+    
     //
     //User routes
     //
-    //create a new user with 'name, password'
-    app.post('/api/user/', UserController.create);
     //change password of an existing user with 'name, password, newPassword'
     app.put('/api/user/', UserController.edit);
     //remove a user from the database with 'name, password'
-    app.delete('/api/user', UserController.remove);
+    app.delete('/api/user/', UserController.remove);
 
     //
     //Season routes
     //
     //get all seasons
-    app.get('/api/seasons', SeasonController.getAll);
+    app.get('/api/seasons/', SeasonController.getAll);
     //create a new season with 'name, description, imageLink, year'
-    app.post('/api/season', SeasonController.create);
+    app.post('/api/season/', SeasonController.create);
     //edit an existing season with 'id, name, description, imageLink, year'
-    app.put('/api/season', SeasonController.edit);
+    app.put('/api/season/', SeasonController.edit);
     //remove an existing season with 'name'
-    app.delete('/api/season', SeasonController.remove);
+    app.delete('/api/season/', SeasonController.remove);
 
     //
     //Operator routes
     //
     //get all operators
-    app.get('/api/operators', OperatorController.getAll);
+    app.get('/api/operators/', OperatorController.getAll);
     //create a new operator with 'name, description, imageLink, side'
-    app.post('/api/operator', OperatorController.create);
+    app.post('/api/operator/', OperatorController.create);
     //edit an existing operator with 'id, name, description, imageLink, side'
-    app.put('/api/operator', OperatorController.edit);
+    app.put('/api/operator/', OperatorController.edit);
     //remove an existing operator with 'id'
-    app.delete('/api/operator', OperatorController.remove);
+    app.delete('/api/operator/', OperatorController.remove);
 };
