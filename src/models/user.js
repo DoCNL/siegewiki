@@ -18,6 +18,10 @@ const UserSchema = new Schema({
             message: 'Password must be at least six characters.'
         },
         required: [true, 'Password is required.']
+    },
+    admin: {
+        type: Boolean,
+        default: false
     }
 });
 

@@ -1,5 +1,6 @@
 const Season = require('../models/season');
 const Operator = require('../models/operator');
+var auth = require('./auth_controller');
 
 function getAll(req, res) {
     Operator.find({})
@@ -10,7 +11,6 @@ function getAll(req, res) {
 };
 
 function create(req, res) {
-    console.log(req.body);
     Operator.create({
         name: req.body.name,
         description: req.body.description,

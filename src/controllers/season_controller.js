@@ -1,6 +1,7 @@
 const Season = require('../models/season');
 const Operator = require('../models/operator');
 const SiegeMap = require('../models/siegemap');
+var auth = require('./auth_controller');
 
 function getAll(req, res) {
     Season.find({})
@@ -9,7 +10,6 @@ function getAll(req, res) {
             console.log('>>seasons returned');
         });
 };
-
 
 function create(req, res) {
     Season.create({
