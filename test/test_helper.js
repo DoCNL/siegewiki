@@ -1,29 +1,19 @@
 const mongoose = require('mongoose')
-mongoose.Promise = global.Promise
+const mongodb = require('../config/mongodb_connector');
 
-before((done) => {
+before(() => {
+    mongoose.disconnect();
+    mongodb.createTestConnection();
+});
 
-
-    mongoose.connect('mongodb://localhost/siegewiki_test', {useNewUrlParser: true})
-
-    mongoose.connection
-        .once('open', () => {
-            done()
+beforeEach((done) => {
+    mongoose.connection.collections.users.drop(() => {
+        mongoose.connection.collections.operators.drop(() => {
+            mongoose.connection.collections.seasons.drop(() => {
+                mongoose.connection.collections.siegemaps.drop(() => {
+                done();
+                })
+            })
         })
-        .on('error', (error) => {
-            console.warn('Warning:', error)
-            done()
-        })
+    })
 })
-
-// beforeEach((done) => {
-//     mongoose.connection.collections.users.drop(() => {
-//         mongoose.connection.collections.operators.drop(() => {
-//             mongoose.connection.collections.seasons.drop(() => {
-//                 mongoose.connection.collections.siegemaps.drop(() => {
-//                 done();
-//                 })
-//             })
-//         })
-//     })
-// })
