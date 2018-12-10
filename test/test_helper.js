@@ -6,14 +6,14 @@ before(() => {
     mongodb.createTestConnection();
 });
 
-beforeEach((done) => {
-    mongoose.connection.collections.users.drop(() => {
-        mongoose.connection.collections.operators.drop(() => {
-            mongoose.connection.collections.seasons.drop(() => {
-                mongoose.connection.collections.siegemaps.drop(() => {
-                done();
-                })
-            })
-        })
-    })
-})
+// beforeEach((done) => {
+//         mongoose.connection.collections.users.drop(() => {
+//             mongoose.connection.collections.operators.drop(() => {
+//                 mongoose.connection.collections.seasons.drop(() => {
+//                     mongoose.connection.collections.siegemaps.drop(() => {
+//                     done();
+//                     })
+//                 })
+//             })
+//         })
+// })
