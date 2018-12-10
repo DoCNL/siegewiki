@@ -7,9 +7,13 @@ function create(req, res) {
         name: req.body.name,
         password: hashedPassword
     })  
-    .then(() =>
-        res.status(200).send({Message: "User created succesfully."}),
-        console.log('>>user saved'))
+    .then(madeUser => {
+        console.log('>>user saved')
+        var token = jwt.sign({ id: madeUser._id }, config.secret, {
+            expiresIn: 86400 // expires in 24 hours
+          });
+          res.status(200).send({ Message: "User created succesfully.", auth: true, token: token });
+    })
     .catch((err) => {
             if (err.name == 'MongoError' && err.code == 11000) {
                 res.status(401).send({ Error: 'Username is taken.'});
