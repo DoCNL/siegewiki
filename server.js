@@ -11,7 +11,7 @@ var mongodb = require('./config/mongodb_connector');
 var defS = require('./config/default_data');
 const cors = require('cors');
 
-app.user(cors());
+app.use(cors());
 
 app.use(bodyParser.json());
 routes(app);
