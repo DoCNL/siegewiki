@@ -51,9 +51,9 @@ module.exports = (app) => {
     //get all siegemaps
     app.get('/api/siegemaps/', MapController.getAll);
     //create a new siegemap with 'name, description, imageLink, ranked'
-    app.post('/api/siegemap/', MapController.create);
+    app.post('/api/siegemap/', AuthController.validateToken, MapController.create);
     //edit an existing siegemap with 'id, name, description, imageLink, ranked'
-    app.put('/api/siegemap/', MapController.edit);
+    app.put('/api/siegemap/', AuthController.validateToken, MapController.edit);
     //remove an existing siegemap with 'id'
-    app.delete('/api/siegemap/', MapController.remove);
+    app.delete('/api/siegemap/', AuthController.validateToken, MapController.remove);
 };
