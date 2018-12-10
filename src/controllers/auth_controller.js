@@ -23,10 +23,13 @@ function login(req, res) {
 }
 
 function validateToken(req, res, next) {
-    var token = req.headers['x-access-token'];
-    console.log(token)
-    if (!token) return res.status(401).send({ Error :'No token provided.'})
-    
+    if (!req.headers.authorization) {
+        return res.status(401).send({ Error :'No token provided.'})
+    }
+    let token = req.headers.authorization.split(' ')[1]
+    if (token === 'null') {
+        return res.status(401).send({ Error :'No token provided.'})
+    }
     jwt.verify(token, config.secret, function(err, decoded) {
         console.log(decoded)
       if (err) return res.status(401).send({ Error :'Token is invalid.'})
