@@ -1,6 +1,5 @@
 const User = require('../models/user');
 var bcrypt = require('bcryptjs');
-var auth = require('./auth_controller');
 
 function create(req, res) {
     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
@@ -21,6 +20,7 @@ function create(req, res) {
 };
 
 function edit(req, res) {
+    var hashedPassword = bcrypt.hashSync(req.body.newPassword, 8);
     User.findOne( { name: req.body.name } )
     .then(user => {
         if(user === null){
@@ -31,7 +31,7 @@ function edit(req, res) {
             res.status(401).send({ Error :'Current password does not match.'})
         }
         else {
-            user.set(password, req.body.newPassword)
+            user.set(password, hashedPassword)
             user.save()
             .then(() => res.status(200).send({Message: "password changed succesfully"}))
             .catch((err) => res.status(401).send({err}));

@@ -1,10 +1,11 @@
 const Season = require('../models/season');
 const Operator = require('../models/operator');
 const SiegeMap = require('../models/siegemap');
-var auth = require('./auth_controller');
+
+//todo: refactor the way operators are added to seasons, add maps to seasons
 
 function getAll(req, res) {
-    Season.find({})
+    Season.find({}, {__v: 0})
         .then(seasons => {
             res.status(200).send(seasons);
             console.log('>>seasons returned');

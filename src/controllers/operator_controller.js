@@ -1,9 +1,11 @@
 const Season = require('../models/season');
 const Operator = require('../models/operator');
-var auth = require('./auth_controller');
+const defS = require('../../config/default_data');
+
+//todo: add operators to seasons
 
 function getAll(req, res) {
-    Operator.find({})
+    Operator.find({}, {__v: 0})
         .then(operators => {
             res.status(200).send(operators);
             console.log('>>operators returned');
@@ -15,6 +17,7 @@ function create(req, res) {
         name: req.body.name,
         description: req.body.description,
         imageLink: req.body.imageLink,
+        season: defS.getDefaultSeason,
         side: req.body.side
     })  
     .then(() =>
@@ -40,6 +43,7 @@ function edit(req, res) {
                 name: req.body.name,
                 description: req.body.description,
                 imageLink: req.body.imageLink,
+                season: defS.getDefaultSeason,
                 side: req.body.side
             })
             operator.save()
