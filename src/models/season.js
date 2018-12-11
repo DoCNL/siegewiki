@@ -25,10 +25,10 @@ const SeasonSchema = new Schema({
         },
         required: [true, 'Season year is required.']
     },
-    operators: [{
+    operator: {
         type: Schema.Types.ObjectId,
         ref: 'operator'
-    }],
+    },
     map: {
         type: Schema.Types.ObjectId,
         ref: 'siegemap'

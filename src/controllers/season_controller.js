@@ -63,6 +63,36 @@ function edit(req, res) {
     });
 };
 
+function populate(req, res) {
+    Season.findOne( { _id: req.body._id } )
+    .then(season => {
+        if(season === null){
+            res.status(401).send({ Error :'Season does not exist.'})
+        }
+        else { 
+            let operatorName = req.body.operatorName;
+            let siegeMapName = req.body.siegeMapName;
+            if (req.body.operatorName === '' || req.body.operatorName === null) operatorName = 'no'
+            if (req.body.siegeMapName === '' || req.body.siegeMapName === null) siegeMapName = 'no'
+            if (operatorName !== 'no') {
+                Operator.findOne({ name: operatorName })
+                .then(operator => {
+                    season.operator.push(operator);
+                })
+            }
+            if (siegeMapName !== 'no') {
+                SiegeMap.findOne({ name: siegeMapName })
+                .then(siegemap => {
+                    season.map.push(siegemap);
+                })
+            }
+            season.save()
+            .then(() => res.status(200).send({Message: "Populated season succesfully"}))
+            .catch((err) => res.status(401).send({err}));
+        }
+    });
+};
+
 
  
 // Operator.findById(req.body.operatorId)
@@ -107,5 +137,6 @@ module.exports = {
     getAll,
     create,
     edit,
-    remove
+    remove,
+    populate
 }

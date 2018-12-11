@@ -30,6 +30,8 @@ module.exports = (app) => {
     app.post('/api/season/', AuthController.validateToken, SeasonController.create);
     //edit an existing season with 'id, name, description, imageLink, year'
     app.put('/api/season/', AuthController.validateToken, SeasonController.edit);
+    //edit an existing season with 'id, name, description, imageLink, year'
+    app.put('/api/season/populate', AuthController.validateToken, SeasonController.populate);
     //remove an existing season with 'name'
     app.delete('/api/season/', AuthController.validateToken, SeasonController.remove);
 
