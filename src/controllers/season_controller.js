@@ -32,37 +32,62 @@ function create(req, res) {
 };
 
 function edit(req, res) {
-    Season.findOne( { _id: req.body.id } )
+    Season.findOne( { _id: req.body._id } )
     .then(season => {
         if(season === null){
             res.status(401).send({ Error :'Season does not exist.'})
         }
         else {
-            Operator.findById(req.body.operatorId)
-            .then(operator => {
-                season.set({
-                    name: req.body.name,
-                    description: req.body.description,
-                    imageLink: req.body.imageLink,
-                    year: req.body.year
-                })
-                season.operators.push(operator);
-                season.save()
-                .then(() => {
-                    res.status(200).send({Message: "Season edited succesfully"})
-                    console.log('>>season edited')
-                })
-                .catch((err) => res.status(401).send({err}));
+            let nameToSet = req.body.name;
+            let descToSet = req.body.description;
+            let imgToSet = req.body.imageLink;
+            let yearToSet = req.body.year;
+            if (req.body.name === '' || req.body.name === null) nameToSet = season.name
+            if (req.body.description === '' || req.body.description === null) descToSet = season.description
+            if (req.body.imageLink === '' || req.body.imageLink === null) imgToSet = season.imageLink
+            if (req.body.year === '' || req.body.year === null) sideToSet = season.year
+            
+            season.set({
+                name: nameToSet,
+                description: descToSet,
+                imageLink: imgToSet,
+                year: yearToSet
             })
-            .catch(err => {
-                res.status(401).send(err)
-            });
+            .then(() => {
+                res.status(200).send({Message: "Season edited succesfully"})
+                console.log('>>season edited')
+            })
+            .catch((err) => res.status(401).send({err}));
         }
     });
 };
 
+
+ 
+// Operator.findById(req.body.operatorId)
+// .then(operator => {
+//     season.set({
+//         name: req.body.name,
+//         description: req.body.description,
+//         imageLink: req.body.imageLink,
+//         year: req.body.year
+//     })
+//     season.operators.push(operator);
+//     season.save()
+//     .then(() => {
+//         res.status(200).send({Message: "Season edited succesfully"})
+//         console.log('>>season edited')
+//     })
+//     .catch((err) => res.status(401).send({err}));
+// })
+// .catch(err => {
+//     res.status(401).send(err)
+// });
+// }
+// });
+// };
 function remove(req, res) {
-    Season.findOne( { name: req.body.name } )
+    Season.findOne( { _id: req.headers._id } )
     .then(season => {
         if(season === null){
             res.status(401).send({ Error :'Season does not exist.'})
