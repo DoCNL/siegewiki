@@ -39,21 +39,21 @@ function edit(req, res) {
             res.status(401).send({ Error :'Operator does not exist.'})
         }
         else {
-            let nameToSet = null;
-            let descToSet = null;
-            let imgToSet = null;
-            let sideToSet = null;
+            let nameToSet = req.body.name;
+            let descToSet = req.body.description;
+            let imgToSet = req.body.imageLink;
+            let sideToSet = req.body.side;
             if (req.body.name === '' || req.body.name === null) nameToSet = operator.name
             if (req.body.description === '' || req.body.description === null) descToSet = operator.description
             if (req.body.imageLink === '' || req.body.imageLink === null) imgToSet = operator.imageLink
             if (req.body.side === '' || req.body.side === null) sideToSet = operator.side
             
             operator.set({
-                name: req.body.name || nameToSet,
-                description: req.body.description || descToSet,
-                imageLink: req.body.imageLink || imgToSet,
+                name: nameToSet,
+                description: descToSet,
+                imageLink: imgToSet,
                 season: defS.getDefaultSeason,
-                side: req.body.side || sideToSet
+                side: sideToSet
             })
             operator.save()
             .then(() => {
