@@ -66,7 +66,7 @@ function edit(req, res) {
 };
 
 function remove(req, res) {
-    Operator.findOne( { _id: req.body.id } )
+    Operator.findOne( { _id: req.headers._id } )
     .then(operator => {
         if(operator === null){
             res.status(401).send({ Error :'Operator does not exist.'})
