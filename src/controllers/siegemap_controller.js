@@ -33,7 +33,7 @@ function create(req, res) {
 };
 
 function edit(req, res) {
-    SiegeMap.findOne( { _id: req.body.id } )
+    SiegeMap.findOne( { _id: req.headers._id } )
     .then(siegemap => {
         if(siegemap === null){
             res.status(401).send({ Error :'Siegemap does not exist.'})
@@ -57,7 +57,7 @@ function edit(req, res) {
 };
 
 function remove(req, res) {
-    SiegeMap.findOne( { _id: req.body.id } )
+    SiegeMap.findOne( { _id: req.headers._id } )
     .then(siegemap => {
         if(siegemap === null){
             res.status(401).send({ Error :'Siegemap does not exist.'})
