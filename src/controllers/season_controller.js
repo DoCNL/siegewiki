@@ -53,6 +53,7 @@ function edit(req, res) {
                 imageLink: imgToSet,
                 year: yearToSet
             })
+            season.save()
             .then(() => {
                 res.status(200).send({Message: "Season edited succesfully"})
                 console.log('>>season edited')
