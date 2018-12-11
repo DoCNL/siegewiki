@@ -49,7 +49,7 @@ function remove(req, res) {
     User.findOne( { name: req.body.name } )
     .then(user => {
         if(user === null){
-            res.status(401).send({ Error :'User does not exist.'})
+            res.status(401).send({ Error :'User does not exist. ' + req.body.name})
         }
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if(!passwordIsValid){
