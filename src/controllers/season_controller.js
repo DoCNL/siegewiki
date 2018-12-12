@@ -72,27 +72,27 @@ function edit(req, res) {
     });
 };
 
-function recreate(res, season, operatorAdd, mapAdd) {
-    console.log(season._id + season)
-    Season.findOne({ _id: season._id })
-        .then((foundSeason) => {
-            return foundSeason.delete()
-        })
-        .then(() => {
-            return Season.create({
-                _id: season._id,
-                __v: season.__v,
-                name: season.name,
-                description: season.description,
-                imageLink: season.imageLink,
-                year: season.year,
-                siegeoperator: operatorAdd,
-                siegemap: mapAdd
-            })
-         })
-        .then(() => { res.status(200).send({Message: "Populated season succesfully"}) })
-        .catch((err) => res.status(401).send({err}));
-}
+// function recreate(res, season, operatorAdd, mapAdd) {
+//     console.log(season._id + season)
+//     Season.findOne({ _id: season._id })
+//         .then((foundSeason) => {
+//             return foundSeason.delete()
+//         })
+//         .then(() => {
+//             return Season.create({
+//                 _id: season._id,
+//                 __v: season.__v,
+//                 name: season.name,
+//                 description: season.description,
+//                 imageLink: season.imageLink,
+//                 year: season.year,
+//                 siegeoperator: operatorAdd,
+//                 siegemap: mapAdd
+//             })
+//          })
+//         .then(() => { res.status(200).send({Message: "Populated season succesfully"}) })
+//         .catch((err) => res.status(401).send({err}));
+// }
 
 function populate(req, res) {
     console.log(req.body)

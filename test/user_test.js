@@ -16,7 +16,7 @@ describe('The usercontroller can', function () {
         newPassword: 'nieuwepaslmao'
     };
 
-    it('should register a user', function (done) {
+    xit('should register a user', function (done) {
         request(app)
             .post('/api/user/register')
             .send(user)
@@ -49,7 +49,7 @@ describe('The usercontroller can', function () {
             });
     })
 
-    it.only('should log a user in', function (done) {
+    xit('should log a user in', function (done) {
         var token = 'Bearer ';
         chai.request(app)
             .post('/api/user/register')

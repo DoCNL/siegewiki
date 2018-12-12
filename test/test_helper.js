@@ -16,16 +16,15 @@ before( function(done) {
 
 beforeEach( function(done) {
     this.timeout(0);
-    done();
     const { users, operators, seasons, siegemaps } = mongoose.connection.collections;
 
-    // users.drop(() => {
-    //     siegemaps.drop(() => {
-    //         operators.drop(() => {
-    //             seasons.drop(() => {
-    //                 done();
-    //             });
-    //         });
-    //     });
-    // });
+    users.drop(() => {
+        siegemaps.drop(() => {
+            operators.drop(() => {
+                seasons.drop(() => {
+                    done();
+                });
+            });
+        });
+    });
 });
