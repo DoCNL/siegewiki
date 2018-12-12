@@ -12,9 +12,9 @@ function getAll(req, res) {
 
 function getAllPopulated(req, res) {
     Season.find({}, {__v: 0})
-    .populate('map')
+    //.populate('map')
     .then(seasons => {
-        //console.log(seasons[0].operator.name)
+        console.log(seasons[0].operator.name)
         res.status(200).send(seasons);
         console.log('>>seasons returned');
     });
@@ -74,10 +74,11 @@ function edit(req, res) {
 function recreate(res, season, operatorAdd, mapAdd) {
     console.log(season._id + season)
     Season.findOne({ _id: season._id })
-    .then((foundSeason) => {
-        foundSeason.delete()
+        .then((foundSeason) => {
+            return foundSeason.delete()
+        })
         .then(() => {
-            Season.create({
+            return Season.create({
                 _id: season._id,
                 __v: season.__v,
                 name: season.name,
@@ -86,39 +87,82 @@ function recreate(res, season, operatorAdd, mapAdd) {
                 year: season.year,
                 operator: operatorAdd,
                 map: mapAdd
-            }).then(() => { res.status(200).send({Message: "Populated season succesfully"}) })
-            .catch((err) => res.status(401).send({err}));
-        })
-    })
+            })
+         })
+        .then(() => { res.status(200).send({Message: "Populated season succesfully"}) })
+        .catch((err) => res.status(401).send({err}));
 }
 
 function populate(req, res) {
-    Season.findOne( { _id: req.body._id } )
-    .then(season => {
-        if(season === null){
-            res.status(401).send({ Error :'Season does not exist.'})
-        }
-        else { 
-            let operatorName = req.body.operatorName;
-            let siegeMapName = req.body.siegeMapName;
-            let foundOperator = new Operator();
-            let foundMap = new Map();
-
-            Operator.findOne({ name: operatorName })
-                .then(resultOp => {
-                    foundOperator = resultOp;
-                })
-                .catch((err) => res.status(401).send({err}));
-
-                SiegeMap.findOne({ name: siegeMapName })
-                .then(resultMap => {
-                    foundMap = resultMap;
-                })
-                .catch((err) => res.status(401).send({err}));
-                recreate(res, season, foundOperator, foundMap)
-        }
-    });
+    Season.findOne({ _id: req.body._id })
+        .then((foundSeason) => {
+            return foundSeason.delete()
+        })
+        .then(() => {
+            return Season.create({
+                _id: season._id,
+                __v: season.__v,
+                name: season.name,
+                description: season.description,
+                imageLink: season.imageLink,
+                year: season.year,
+                operator: req.body.operatorName,
+                map: req.body.siegeMapName
+            })
+         })
+        .then(() => { res.status(200).send({Message: "Populated season succesfully"}) })
+        .catch((err) => res.status(401).send({err}));
 };
+
+// function recreate(res, season, operatorAdd, mapAdd) {
+//     console.log(season._id + season)
+//     Season.findOne({ _id: season._id })
+//         .then((foundSeason) => {
+//             return foundSeason.delete()
+//         })
+//         .then(() => {
+//             return Season.create({
+//                 _id: season._id,
+//                 __v: season.__v,
+//                 name: season.name,
+//                 description: season.description,
+//                 imageLink: season.imageLink,
+//                 year: season.year,
+//                 operator: operatorAdd,
+//                 map: mapAdd
+//             })
+//          })
+//         .then(() => { res.status(200).send({Message: "Populated season succesfully"}) })
+//         .catch((err) => res.status(401).send({err}));
+// }
+
+// function populate(req, res) {
+//     Season.findOne( { _id: req.body._id } )
+//     .then(season => {
+//         if(season === null){
+//             res.status(401).send({ Error :'Season does not exist.'})
+//         }
+//         else { 
+//             let operatorName = req.body.operatorName;
+//             let siegeMapName = req.body.siegeMapName;
+//             let foundOperator = new Operator();
+//             let foundMap = new Map();
+
+//             Operator.findOne({ name: operatorName })
+//                 .then(resultOp => {
+//                     foundOperator = resultOp;
+//                 })
+//                 .catch((err) => res.status(401).send({err}));
+
+//             SiegeMap.findOne({ name: siegeMapName })
+//                 .then(resultMap => {
+//                     foundMap = resultMap;
+//                 })
+//                 .catch((err) => res.status(401).send({err}));
+//                 recreate(res, season, foundOperator, foundMap)
+//         }
+//     });
+// };
 
 function remove(req, res) {
     Season.findOne( { _id: req.headers._id } )
@@ -138,7 +182,7 @@ function remove(req, res) {
 
 module.exports = {
     getAll,
-    //getAllPopulated,
+    getAllPopulated,
     create,
     edit,
     remove,

@@ -49,7 +49,7 @@ describe('The usercontroller can', function () {
             });
     })
 
-    xit('should log a user in', function (done) {
+    it.only('should log a user in', function (done) {
         var token = 'Bearer ';
         chai.request(app)
             .post('/api/user/register')
@@ -59,25 +59,19 @@ describe('The usercontroller can', function () {
                 token = 'Bearer ' + res.body.token
                 console.log(token)
                 expect(res.statusCode).to.equal(200);
+                chai.request(app)
+                .put('/api/user/')
+                .set({ 'Authorization': token })
+                .send({user})
+                .end(function (err, res) { 
+                    console.log(token);
+                    expect(res.statusCode).to.equal(200);
+                    //expect(res.body.auth).to.equal(true);
+    
+                    done();
+                });
             })
-        chai.request(app)
-            .put('/api/user/')
-            .set({ 'Authorization': token })
-            .send({
-                name: 'testnameChai',
-                password: 'testpasswordChai',
-                newPassword: 'nieuwepaslmao'
+            .then((done) => { 
             })
-            .end(function (err, res) {
-                //if (err) console.log(err);
-                //if (res) 
-                console.log(token);
-                //console.log(res);
-                //expect(res.statusCode).to.equal(200);
-                //expect(res.body.auth).to.equal(true);
-
-                done();
-            });
-
     })
 });

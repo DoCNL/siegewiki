@@ -1,6 +1,6 @@
 var app = require('../server'),
-  chai = require('chai'),
-  request = require('supertest');
+    chai = require('chai'),
+    request = require('supertest');
 var expect = chai.expect;
 
 describe('The authcontroller can ', function(){
