@@ -2,8 +2,6 @@ const Season = require('../models/season');
 const Operator = require('../models/operator');
 const SiegeMap = require('../models/siegemap');
 
-//todo: refactor the way operators are added to seasons, add maps to seasons
-
 function getAll(req, res) {
     Season.find({}, {__v: 0})
         .then(seasons => {
@@ -11,6 +9,16 @@ function getAll(req, res) {
             console.log('>>seasons returned');
         });
 };
+
+function getAllPopulated(req, res) {
+    Season.find({}, {__v: 0})
+    .populate('map')
+    .then(seasons => {
+        //console.log(seasons[0].operator.name)
+        res.status(200).send(seasons);
+        console.log('>>seasons returned');
+    });
+}
 
 function create(req, res) {
     Season.create({
@@ -78,7 +86,8 @@ function recreate(res, season, operatorAdd, mapAdd) {
                 year: season.year,
                 operator: operatorAdd,
                 map: mapAdd
-            }).then(season => { res.status(200).send({Message: "Populated season succesfully"}) })
+            }).then(() => { res.status(200).send({Message: "Populated season succesfully"}) })
+            .catch((err) => res.status(401).send({err}));
         })
     })
 }
@@ -94,7 +103,6 @@ function populate(req, res) {
             let siegeMapName = req.body.siegeMapName;
             let foundOperator = new Operator();
             let foundMap = new Map();
-            let newSeason = new Season();
 
             Operator.findOne({ name: operatorName })
                 .then(resultOp => {
@@ -107,7 +115,7 @@ function populate(req, res) {
                     foundMap = resultMap;
                 })
                 .catch((err) => res.status(401).send({err}));
-                newSeason = recreate(res, season, foundOperator, foundMap)
+                recreate(res, season, foundOperator, foundMap)
         }
     });
 };
@@ -130,6 +138,7 @@ function remove(req, res) {
 
 module.exports = {
     getAll,
+    //getAllPopulated,
     create,
     edit,
     remove,
