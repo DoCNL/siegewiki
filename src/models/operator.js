@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Season = require('./season');
 
 const OperatorSchema = new Schema({
     name: {
@@ -15,12 +14,6 @@ const OperatorSchema = new Schema({
     imageLink: {
         type: String,
         required: [true, 'Link an online image to describe the operator.']
-    },
-    season: {
-        type: {
-            type: Schema.Types.ObjectId,
-            ref: 'season'
-        }
     },
     side: {
         type: String,

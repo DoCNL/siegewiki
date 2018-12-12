@@ -17,7 +17,6 @@ function create(req, res) {
         name: req.body.name,
         description: req.body.description,
         imageLink: req.body.imageLink,
-        season: defS.getDefaultSeason(),
         rankedAvailability: req.body.ranked
     })  
     .then(() =>
@@ -33,18 +32,27 @@ function create(req, res) {
 };
 
 function edit(req, res) {
-    SiegeMap.findOne( { _id: req.body.id } )
+    SiegeMap.findOne( { _id: req.body._id } )
     .then(siegemap => {
         if(siegemap === null){
             res.status(401).send({ Error :'Siegemap does not exist.'})
         }
         else {
+            let nameToSet = req.body.name;
+            let descToSet = req.body.description;
+            let imgToSet = req.body.imageLink;
+            let avToSet = req.body.rankedAvailability;
+            if (req.body.name === '' || req.body.name === null) nameToSet = operator.name
+            if (req.body.description === '' || req.body.description === null) descToSet = operator.description
+            if (req.body.imageLink === '' || req.body.imageLink === null) imgToSet = operator.imageLink
+            if (req.body.rankedAvailability === '' || req.body.rankedAvailability === null) avToSet = operator.side
+            
             siegemap.set({
-                name: req.body.name,
-                description: req.body.description,
-                imageLink: req.body.imageLink,
+                name: nameToSet,
+                description: descToSet,
+                imageLink: imgToSet,
                 season: defS.getDefaultSeason(),
-                rankedAvailability: req.body.ranked
+                rankedAvailability: avToSet
             })
             siegemap.save()
             .then(() => {
@@ -57,7 +65,7 @@ function edit(req, res) {
 };
 
 function remove(req, res) {
-    SiegeMap.findOne( { _id: req.body.id } )
+    SiegeMap.findOne( { _id: req.headers._id } )
     .then(siegemap => {
         if(siegemap === null){
             res.status(401).send({ Error :'Siegemap does not exist.'})

@@ -1,7 +1,7 @@
-var User = require('../models/user');
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
-var config = require('../../config/auth_config');
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const config = require('../../config/auth_config');
 
 function login(req, res) {
     User.findOne( { name: req.body.name } )
@@ -23,10 +23,13 @@ function login(req, res) {
 }
 
 function validateToken(req, res, next) {
-    var token = req.headers['x-access-token'];
-    console.log(token)
-    if (!token) return res.status(401).send({ Error :'No token provided.'})
-    
+    if (!req.headers.authorization) {
+        return res.status(401).send({ Error :'No token provided.'})
+    }
+    let token = req.headers.authorization.split(' ')[1]
+    if (token === 'null') {
+        return res.status(401).send({ Error :'No token provided.'})
+    }
     jwt.verify(token, config.secret, function(err, decoded) {
         console.log(decoded)
       if (err) return res.status(401).send({ Error :'Token is invalid.'})
