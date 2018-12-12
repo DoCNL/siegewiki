@@ -22,10 +22,10 @@ switch (env) {
       mongodb.createDevConnection();
       break;
     case 'prod':
-      mongodb.createProdConnection();
+      mongodb.createDevConnection();
       break;
     case 'test':
-      mongodb.createTestConnection();
+      mongodb.createDevConnection();
       break;
 }
 
