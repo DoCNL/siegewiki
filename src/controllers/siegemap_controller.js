@@ -17,7 +17,6 @@ function create(req, res) {
         name: req.body.name,
         description: req.body.description,
         imageLink: req.body.imageLink,
-        season: defS.getDefaultSeason(),
         rankedAvailability: req.body.ranked
     })  
     .then(() =>

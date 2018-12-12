@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Operator = require('./operator');
-const SiegeMap = require('./siegemap');
 
 const SeasonSchema = new Schema({
     name: {
