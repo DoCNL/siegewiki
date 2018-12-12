@@ -37,5 +37,7 @@ app.listen(process.env.PORT || 3000, () => {
 });
 
 defS.addDefaultSeason();
+// defS.addDefaultOperator();
+// defS.addDefaultSiegeMap();
 
 module.exports = app;

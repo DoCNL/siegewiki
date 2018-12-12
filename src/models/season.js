@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Operator = require('./operator');
-const SiegeMap = require('./siegemap');
 
 const SeasonSchema = new Schema({
     name: {
@@ -25,10 +23,10 @@ const SeasonSchema = new Schema({
         },
         required: [true, 'Season year is required.']
     },
-    operators: [{
+    operator: {
         type: Schema.Types.ObjectId,
         ref: 'operator'
-    }],
+    },
     map: {
         type: Schema.Types.ObjectId,
         ref: 'siegemap'

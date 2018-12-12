@@ -37,7 +37,7 @@ function edit(req, res) {
             res.status(401).send({ Error :'Current password does not match.'})
         }
         else {
-            user.set(password, hashedPassword)
+            user.set({password: hashedPassword})
             user.save()
             .then(() => res.status(200).send({Message: "password changed succesfully"}))
             .catch((err) => res.status(401).send({err}));
@@ -46,13 +46,13 @@ function edit(req, res) {
 };
 
 function remove(req, res) {
-    User.findOne( { name: req.body.name } )
+    User.findOne( { name: req.headers.name } )
     .then(user => {
         if(user === null){
-            res.status(401).send({ Error :'User does not exist.'})
+            res.status(401).send({ Error :'User does not exist. ' + req.headers.name})
         }
-        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-        if(!passwordIsValid){
+        var passwordIsValid = bcrypt.compareSync(req.headers.password, user.password);
+        if(!passwordIsValid) {
             res.status(401).send({ Error :'Current password does not match.'})
         }
         else {
