@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
-before((done) => {
+before( function(done) {
     mongoose.disconnect();
     mongoose.connect('mongodb://localhost/siegewiki_test', { useNewUrlParser: true })
     var connection = mongoose.connection
@@ -14,3 +14,17 @@ before((done) => {
         });
 });
 
+beforeEach( function(done) {
+    this.timeout(0);
+    const { users, operators, seasons, siegemaps } = mongoose.connection.collections;
+
+    users.drop(() => {
+        siegemaps.drop(() => {
+            operators.drop(() => {
+                seasons.drop(() => {
+                    done();
+                });
+            });
+        });
+    });
+});
