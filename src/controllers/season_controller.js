@@ -11,9 +11,10 @@ function getAll(req, res) {
 };
 
 function getAllPopulated(req, res) {
-    Season.find({}, {__v: 0})
-    .populate('map', 'operator')
-    .then(seasons => {
+    Season.find({name: 'asd'}, {})
+    .populate('siegemap')
+    .populate('siegeoperator', 'name')
+    .then((seasons) => {
         console.log(seasons)
         res.status(200).send(seasons);
         console.log('>>seasons returned');
@@ -85,8 +86,8 @@ function recreate(res, season, operatorAdd, mapAdd) {
                 description: season.description,
                 imageLink: season.imageLink,
                 year: season.year,
-                operator: operatorAdd,
-                map: mapAdd
+                siegeoperator: operatorAdd,
+                siegemap: mapAdd
             })
          })
         .then(() => { res.status(200).send({Message: "Populated season succesfully"}) })
@@ -94,23 +95,15 @@ function recreate(res, season, operatorAdd, mapAdd) {
 }
 
 function populate(req, res) {
-    Season.findOne({ _id: req.body._id })
-        .then((foundSeason) => {
-            return foundSeason.delete()
+    console.log(req.body)
+    Season.findByIdAndUpdate(req.body._id,
+         {
+            siegeoperator: req.body.operatorName,
+            siegemap: req.body.siegeMapName
         })
-        .then(() => {
-            return Season.create({
-                _id: season._id,
-                __v: season.__v,
-                name: season.name,
-                description: season.description,
-                imageLink: season.imageLink,
-                year: season.year,
-                operator: req.body.operatorName,
-                map: req.body.siegeMapName
-            })
-         })
-        .then(() => { res.status(200).send({Message: "Populated season succesfully"}) })
+        .then((result) => { 
+            console.log(result);
+            res.status(200).send({Message: "Populated season succesfully"}) })
         .catch((err) => res.status(401).send({err}));
 };
 
