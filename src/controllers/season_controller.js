@@ -12,9 +12,9 @@ function getAll(req, res) {
 
 function getAllPopulated(req, res) {
     Season.find({}, {__v: 0})
-    //.populate('map')
+    .populate('map', 'operator')
     .then(seasons => {
-        console.log(seasons[0].operator.name)
+        console.log(seasons)
         res.status(200).send(seasons);
         console.log('>>seasons returned');
     });
