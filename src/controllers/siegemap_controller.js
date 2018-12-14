@@ -42,10 +42,10 @@ function edit(req, res) {
             let descToSet = req.body.description;
             let imgToSet = req.body.imageLink;
             let avToSet = req.body.rankedAvailability;
-            if (req.body.name === '' || req.body.name === null) nameToSet = operator.name
-            if (req.body.description === '' || req.body.description === null) descToSet = operator.description
-            if (req.body.imageLink === '' || req.body.imageLink === null) imgToSet = operator.imageLink
-            if (req.body.rankedAvailability === '' || req.body.rankedAvailability === null) avToSet = operator.side
+            if (req.body.name === '' || req.body.name === null) nameToSet = siegemap.name;
+            if (req.body.description === '' || req.body.description === null) descToSet = siegemap.description;
+            if (req.body.imageLink === '' || req.body.imageLink === null) imgToSet = siegemap.imageLink;
+            if (req.body.rankedAvailability === '' || req.body.rankedAvailability === null) avToSet = false;
             
             siegemap.set({
                 name: nameToSet,

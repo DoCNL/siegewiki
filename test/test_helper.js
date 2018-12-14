@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
 const mongodb = require('../config/mongodb_connector');
 
 before(() => {
@@ -6,14 +7,17 @@ before(() => {
     mongodb.createTestConnection();
 });
 
-// beforeEach((done) => {
-//         mongoose.connection.collections.users.drop(() => {
-//             mongoose.connection.collections.operators.drop(() => {
-//                 mongoose.connection.collections.seasons.drop(() => {
-//                     mongoose.connection.collections.siegemaps.drop(() => {
-//                     done();
-//                     })
-//                 })
-//             })
-//         })
-// })
+beforeEach( function() {
+    this.timeout(0);
+    const { users, operators, seasons, siegemaps } = mongoose.connection.collections;
+
+    // users.drop(() => {
+    //     siegemaps.drop(() => {
+    //         operators.drop(() => {
+    //             seasons.drop(() => {
+    //                 done();
+    //             });
+    //         });
+    //     });
+    // });
+});

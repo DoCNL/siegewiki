@@ -1,8 +1,3 @@
-//create 3 functions in mongodb_connector:
-//  one to start test db,
-//  other to start regular db,
-//  other to start dev db(ran from mlab, not heroku)
-const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser= require('body-parser')
 const app = express();
