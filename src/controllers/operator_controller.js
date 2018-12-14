@@ -11,9 +11,8 @@ function getAll(req, res) {
             console.log('>>operators returned');
         });
 };
-
 function getOne(req, res) {
-    Operator.findOne({ _id: req.params.id })
+    Operator.findOne({ _id: req.headers._id })
         .then(operator => {
             if (operator === null) {
                 res.status(401).send({ Error: 'Operator does not exist.' })
@@ -24,6 +23,21 @@ function getOne(req, res) {
             }
         })
 }
+
+function getOneById(req, res) {
+    Operator.findById(req.params.id)
+        .then(operator => {
+            if (operator === null) {
+                res.status(401).send({ Error: 'Operator does not exist.' })
+            }
+            else {
+                res.status(200).send(operator);
+                console.log('>>operator returned');
+            }
+        })
+}
+
+
 
 function create(req, res) {
     Operator.create({
@@ -96,6 +110,7 @@ function remove(req, res) {
 module.exports = {
     getAll,
     getOne,
+    getOneById,
     create,
     edit,
     remove
