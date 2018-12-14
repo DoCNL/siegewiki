@@ -43,7 +43,7 @@ module.exports = (app) => {
     //get all operators
     app.get('/api/operators/', OperatorController.getAll);
     //get operator by id
-    app.get('/api/operator/', OperatorController.getOne);
+    app.get('/api/operator/:id', OperatorController.getOne);
     //create a new operator with 'name, description, imageLink, side'
     app.post('/api/operator/', AuthController.validateToken, OperatorController.create);
     //edit an existing operator with 'id, name, description, imageLink, side'

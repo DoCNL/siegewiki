@@ -13,7 +13,7 @@ function getAll(req, res) {
 };
 
 function getOne(req, res) {
-    Operator.findOne({ _id: req.headers._id })
+    Operator.findOne({ _id: req.params.id })
         .then(operator => {
             if (operator === null) {
                 res.status(401).send({ Error: 'Operator does not exist.' })
