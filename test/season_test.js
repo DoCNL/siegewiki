@@ -2,6 +2,7 @@ var app = require('../server'),
   chai = require('chai'),
   request = require('supertest');
 var expect = chai.expect;
+var Season = require('../src/models/season');
 
 describe('The seasoncontroller can ', function(){
     this.timeout(0);
@@ -11,48 +12,35 @@ describe('The seasoncontroller can ', function(){
             .get('/api/seasons')
             .end(function(err, res) {
                 if(err) console.log(err);
-                //console.log(res.body.seasons)
+                // console.log(res.body.seasons)
+                // console.log(res.body)
+                expect(res.statusCode).to.equal(200); 
+                expect(res.body).to.be.an('array'); 
+                done(); 
+            });
+    })
+
+    it('fetch all operators', function(done) {
+        request(app)
+            .get('/api/operators')
+            .end(function(err, res) {
+                if(err) console.log(err);
                 expect(res.statusCode).to.equal(200); 
                 expect(res.body).to.be.an('array'); 
                 expect(res.body).to.be.empty; 
                 done(); 
             })
     })
-    const user = {
-        name: 'testnameReg',
-        password: 'testpassReg'
-    }
 
-    it.only('register a user', function (done) {
-        app.post('/api/user/register',
-            (req, res, next) => {
-                verifyToken(req, res)
-                    .then(() => next())
-                    .catch(err => res.json(err))
-            },
-            (req, res, next) => {
-                getThings(req, res)
-                    .then(response => res.json(response))
-                    .catch(err => res.json(err))
-            });
-    })
-
-    xit('registers in', function(done) {
+    it('fetch all maps', function(done) {
         request(app)
-            .get('/api/user/register')
-            .send(user)
-            .then((res, err) => {
-                if (err) console.log(err);
-                if (res) console.log();
+            .get('/api/siegemaps')
+            .end(function(err, res) {
+                if(err) console.log(err);
                 expect(res.statusCode).to.equal(200); 
+                expect(res.body).to.be.an('array'); 
+                expect(res.body).to.be.empty; 
+                done(); 
             })
-            // .end(function(err, res) {
-            //     if(err) console.log(err);
-            //     console.log(res.body.seasons)
-            //     expect(res.statusCode).to.equal(200); 
-            //     expect(res.body).to.be.an('array'); 
-            //     expect(res.body).to.be.empty; 
-            //     done(); 
-            // })
     })
 });
