@@ -1,41 +1,36 @@
-const app = require('../server');
-const chai = require('chai');
-const request = require('supertest');
-const chaiHttp = require('chai-http')
-const assert = require('assert')
-const User = require('../src/models/user');
-var expect = chai.expect;
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const assert = require('assert');
+const app = require('../server')
+const User = require('../src/models/user');
+const defData = require('../config/default_data');
+var request = require('supertest');
+var expect = chai.expect;
 
 chai.should()
 chai.use(chaiHttp)
 
+const user = {
+    name: 'testname',
+    password: 'testpass'
+}
 
 describe('The authcontroller can ', function(){
-    const user = {
-        name: 'testname',
-        password: 'testpass'
-    }
 
     before((done) => {
-        // Verwijder alle voorgaande users uit de tabel
-        mongoose.connection.collections.users.drop(() => {
-        })
-        .then(() => {
-            return User.create(user)  
-        })
-        .then(madeuser => {
-            console.log(madeuser)
-            done();
-        })
+        defData.addTestUser();
+        done();
 });
 
-it('returns a token on valid login', function(done) {
-    chai.request(server)
-        .post('/api/login')
+xit('returns a token on valid login', function(done) {
+    request(app)
+        .post('/api/user/login/')
         .send(user)
         .end(function(err, res) {
+            if (err) console.log(err);
+            if (res) console.log(res);
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.be.an('object');

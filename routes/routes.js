@@ -26,8 +26,8 @@ module.exports = (app) => {
     //
     //get all seasons
     app.get('/api/seasons/', SeasonController.getAll);
-        //get all seasons Populated
-        app.get('/api/seasons/populate', SeasonController.getAllPopulated);
+    //get all seasons Populated
+    app.get('/api/seasons/populate', SeasonController.getAllPopulated);
     //create a new season with 'name, description, imageLink, year'
     app.post('/api/season/', AuthController.validateToken, SeasonController.create);
     //edit an existing season with 'id, name, description, imageLink, year'

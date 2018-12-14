@@ -16,7 +16,7 @@ describe('The usercontroller can', function () {
         newPassword: 'nieuwepaslmao'
     };
 
-    xit('should register a user', function (done) {
+    xit('shsould register a user', function (done) {
         request(app)
             .post('/api/user/register')
             .send(user)
