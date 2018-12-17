@@ -32,7 +32,7 @@ describe('The seasoncontroller can ', function () {
     };
 
 
-    xit('log in and create a map', function (done) {
+    it('log in and create a map', function (done) {
         SiegeMap.collection.drop(() => {
             var token = 'Bearer ';
             request(app)
