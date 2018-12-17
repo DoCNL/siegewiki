@@ -13,7 +13,7 @@ function getAll(req, res) {
 };
 
 function getOneById(req, res) {
-    SiegeMap.findById(req.params.id)
+    SiegeMap.findById(req.params._id)
         .then(siegemap => {
             if (siegemap === null) {
                 res.status(401).send({ Error: 'SiegeMap does not exist.' })
