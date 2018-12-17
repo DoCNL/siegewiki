@@ -2,37 +2,37 @@ var app = require('../server'),
     chai = require('chai'),
     request = require('supertest');
 var expect = chai.expect;
-var Season = require('../src/models/season');
+var Operator = require('../src/models/operator');
 
 describe('The seasoncontroller can ', function () {
     this.timeout(0);
 
-    it('fetch all seasons', function (done) {
+    it('fetch all operators', function (done) {
         request(app)
-            .get('/api/seasons')
+            .get('/api/operators')
             .end(function (err, res) {
                 if (err) console.log(err);
                 expect(res.statusCode).to.equal(200);
                 expect(res.body).to.be.an('array');
                 done();
-            });
-    });
+            })
+    })
 
     var user = {
-        name: 'SeasonCreateTest',
+        name: 'OperatorCreateTest',
         password: 'testpasswordChai'
     };
 
-    var season = {
-        name: 'seasonTest',
-        description: 'This season is used in a test.',
+    var operator = {
+        name: 'OperatorTest',
+        description: 'This operator is used in a test.',
         imageLink: 'No need for that',
-        year: 2
+        side: 'Attacker'
     };
 
 
-    it('log in and create a season', function (done) {
-        Season.collection.drop(() => {
+    it('log in and create an operator', function (done) {
+        Operator.collection.drop(() => {
             var token = 'Bearer ';
             request(app)
                 .post('/api/user/register')
@@ -42,9 +42,9 @@ describe('The seasoncontroller can ', function () {
                     expect(res.statusCode).to.equal(200);
                     token = 'Bearer ' + res.body.token;
                     chai.request(app)
-                        .post('/api/season/')
+                        .post('/api/operator/')
                         .set({ 'Authorization': token })
-                        .send(season)
+                        .send(operator)
                         .end(function (err, res) {
                             if (err) console.log(err);
                             expect(res.statusCode).to.equal(200);

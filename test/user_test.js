@@ -1,5 +1,4 @@
 var User = require('../src/models/user');
-const bcrypt = require('bcryptjs');
 var app = require('../server'),
     chai = require('chai'),
     request = require('supertest'),
@@ -10,31 +9,30 @@ chai.use(chaiHttp);
 describe('The usercontroller can', function () {
     this.timeout(0);
     var user = {
-        name: 'testnameChai',
+        name: 'UserRegisterTest',
         password: 'testpasswordChai',
-        newPassword: 'nieuwepaslmao'
+        newPassword: 'nieuwepas'
     };
 
-    it('should register a user', function (done) {
+    it('log in and edit a users password', function (done) {
         User.collection.drop(() => {
-        var token = 'Bearer ';
-        request(app)
-            .post('/api/user/register')
-            .send(user)
-            .end(function (err, res) {
-                console.log(res.body)
-                expect(res.body.auth).to.equal(true);
-                expect(res.statusCode).to.equal(200);
-                token = 'Bearer ' + res.body.token;
-                chai.request(app)
-                    .put('/api/user/')
-                    .set({ 'Authorization': token })
-                    .send(user)
-                    .end(function (err, res) {
-                        expect(res.statusCode).to.equal(200);
-                        done();
-                    });
-            });
+            var token = 'Bearer ';
+            request(app)
+                .post('/api/user/register')
+                .send(user)
+                .end(function (err, res) {
+                    expect(res.body.auth).to.equal(true);
+                    expect(res.statusCode).to.equal(200);
+                    token = 'Bearer ' + res.body.token;
+                    chai.request(app)
+                        .put('/api/user/')
+                        .set({ 'Authorization': token })
+                        .send(user)
+                        .end(function (err, res) {
+                            expect(res.statusCode).to.equal(200);
+                            done();
+                        });
+                });
         });
     });
 });
