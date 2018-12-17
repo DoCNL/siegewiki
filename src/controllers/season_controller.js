@@ -21,6 +21,19 @@ function getAllPopulated(req, res) {
     });
 }
 
+function getOneById(req, res) {
+    Season.findById(req.params.id)
+        .then(season => {
+            if (season === null) {
+                res.status(401).send({ Error: 'Season does not exist.' })
+            }
+            else {
+                res.status(200).send(season);
+                console.log('>>season returned');
+            }
+        })
+}
+
 function create(req, res) {
     Season.create({
         name: req.body.name,
@@ -176,6 +189,7 @@ function remove(req, res) {
 module.exports = {
     getAll,
     getAllPopulated,
+    getOneById,
     create,
     edit,
     remove,

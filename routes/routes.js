@@ -28,6 +28,8 @@ module.exports = (app) => {
     app.get('/api/seasons/', SeasonController.getAll);
     //get all seasons Populated
     app.get('/api/seasons/populate', SeasonController.getAllPopulated);
+    //get season by id via parameter
+    app.get('/api/season/:id', SeasonController.getOneById);
     //create a new season with 'name, description, imageLink, year'
     app.post('/api/season/', AuthController.validateToken, SeasonController.create);
     //edit an existing season with 'id, name, description, imageLink, year'
@@ -42,8 +44,10 @@ module.exports = (app) => {
     //
     //get all operators
     app.get('/api/operators/', OperatorController.getAll);
-    //get operator by id
-    app.get('/api/operator/', OperatorController.getOne);
+        //get operator by id via header
+        //app.get('/api/operator/', OperatorController.getOne);
+    //get operator by id via parameter
+    app.get('/api/operator/:id', OperatorController.getOneById);
     //create a new operator with 'name, description, imageLink, side'
     app.post('/api/operator/', AuthController.validateToken, OperatorController.create);
     //edit an existing operator with 'id, name, description, imageLink, side'
@@ -56,6 +60,8 @@ module.exports = (app) => {
     //
     //get all siegemaps
     app.get('/api/siegemaps/', MapController.getAll);
+    //get siegemap by id via parameter
+    app.get('/api/siegemap/:id', MapController.getOneById);
     //create a new siegemap with 'name, description, imageLink, ranked'
     app.post('/api/siegemap/', AuthController.validateToken, MapController.create);
     //edit an existing siegemap with 'id, name, description, imageLink, ranked'
