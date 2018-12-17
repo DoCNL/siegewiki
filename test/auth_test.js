@@ -17,12 +17,10 @@ const user = {
     password: 'testpass'
 }
 
-describe('The authcontroller can ', function(){
+describe('The authcontroller can ', function () {
 
     before((done) => {
         defData.addTestUser();
         done();
-});
-
-
+    });
 });
