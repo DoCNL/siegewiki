@@ -54,7 +54,7 @@ function create(req, res) {
 };
 
 function edit(req, res) {
-    Season.findOne( { _id: req.body._id } )
+    Season.findOne( { _id: req.params.id } )
     .then(season => {
         if(season === null){
             res.status(401).send({ Error :'Season does not exist.'})
@@ -109,7 +109,7 @@ function edit(req, res) {
 
 function populate(req, res) {
     console.log(req.body)
-    Season.findByIdAndUpdate(req.body._id,
+    Season.findByIdAndUpdate(req.params.id,
          {
             siegeoperator: req.body.operatorName,
             siegemap: req.body.siegeMapName
@@ -171,7 +171,7 @@ function populate(req, res) {
 // };
 
 function remove(req, res) {
-    Season.findOne( { _id: req.headers._id } )
+    Season.findOne( { _id: req.params.id } )
     .then(season => {
         if(season === null){
             res.status(401).send({ Error :'Season does not exist.'})

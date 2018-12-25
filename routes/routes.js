@@ -17,55 +17,53 @@ module.exports = (app) => {
     //User routes
     //
     //change password of an existing user with 'name, password, newPassword'
-    app.put('/api/user/', AuthController.validateToken, UserController.edit);
+    app.put('/api/user/:name', AuthController.validateToken, UserController.edit);
     //remove a user from the database with 'name, password'
-    app.delete('/api/user/', AuthController.validateToken, UserController.remove);
+    app.delete('/api/user/:name', AuthController.validateToken, UserController.remove);
 
     //
     //Season routes
     //
     //get all seasons
-    app.get('/api/seasons/', SeasonController.getAll);
-    //get all seasons Populated
-    app.get('/api/seasons/populate', SeasonController.getAllPopulated);
+    app.get('/api/season/', SeasonController.getAll);
+        //get all seasons Populated
+        //app.get('/api/seasons/populate', SeasonController.getAllPopulated);
     //get season by id via parameter
     app.get('/api/season/:id', SeasonController.getOneById);
     //create a new season with 'name, description, imageLink, year'
     app.post('/api/season/', AuthController.validateToken, SeasonController.create);
     //edit an existing season with 'id, name, description, imageLink, year'
-    app.put('/api/season/', AuthController.validateToken, SeasonController.edit);
+    app.put('/api/season/:id', AuthController.validateToken, SeasonController.edit);
     //edit an existing season with 'id, name, description, imageLink, year'
-    app.put('/api/season/populate', AuthController.validateToken, SeasonController.populate);
+    app.put('/api/season/populate/:id', AuthController.validateToken, SeasonController.populate);
     //remove an existing season with 'name'
-    app.delete('/api/season/', AuthController.validateToken, SeasonController.remove);
+    app.delete('/api/season/:id', AuthController.validateToken, SeasonController.remove);
 
     //
     //Operator routes
     //
     //get all operators
-    app.get('/api/operators/', OperatorController.getAll);
-        //get operator by id via header
-        //app.get('/api/operator/', OperatorController.getOne);
+    app.get('/api/operator/', OperatorController.getAll);
     //get operator by id via parameter
     app.get('/api/operator/:id', OperatorController.getOneById);
     //create a new operator with 'name, description, imageLink, side'
     app.post('/api/operator/', AuthController.validateToken, OperatorController.create);
     //edit an existing operator with 'id, name, description, imageLink, side'
-    app.put('/api/operator/', AuthController.validateToken, OperatorController.edit);
+    app.put('/api/operator/:id', AuthController.validateToken, OperatorController.edit);
     //remove an existing operator with 'id'
-    app.delete('/api/operator/', AuthController.validateToken, OperatorController.remove);
+    app.delete('/api/operator/:id', AuthController.validateToken, OperatorController.remove);
 
     //
     //Siegemap routes
     //
     //get all siegemaps
-    app.get('/api/siegemaps/', MapController.getAll);
+    app.get('/api/siegemap/', MapController.getAll);
     //get siegemap by id via parameter
     app.get('/api/siegemap/:id', MapController.getOneById);
     //create a new siegemap with 'name, description, imageLink, ranked'
     app.post('/api/siegemap/', AuthController.validateToken, MapController.create);
     //edit an existing siegemap with 'id, name, description, imageLink, ranked'
-    app.put('/api/siegemap/', AuthController.validateToken, MapController.edit);
+    app.put('/api/siegemap/:id', AuthController.validateToken, MapController.edit);
     //remove an existing siegemap with 'id'
-    app.delete('/api/siegemap/', AuthController.validateToken, MapController.remove);
+    app.delete('/api/siegemap/:id', AuthController.validateToken, MapController.remove);
 };
