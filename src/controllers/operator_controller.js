@@ -59,7 +59,7 @@ function create(req, res) {
 };
 
 function edit(req, res) {
-    Operator.findOne({ _id: req.body._id })
+    Operator.findOne({ _id: req.params.id })
         .then(operator => {
             if (operator === null) {
                 res.status(401).send({ Error: 'Operator does not exist.' })
@@ -92,7 +92,7 @@ function edit(req, res) {
 };
 
 function remove(req, res) {
-    Operator.findOne({ _id: req.headers._id })
+    Operator.findOne({ _id: req.params.id })
         .then(operator => {
             if (operator === null) {
                 res.status(401).send({ Error: 'Operator does not exist.' })

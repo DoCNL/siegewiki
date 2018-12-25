@@ -27,7 +27,7 @@ function create(req, res) {
 
 function edit(req, res) {
     var hashedPassword = bcrypt.hashSync(req.body.newPassword, 8);
-    User.findOne( { name: req.body.name } )
+    User.findOne( { name: req.params.name } )
     .then(user => {
         if(user === null){
             res.status(401).send({ Error :'User does not exist.'})
@@ -46,7 +46,7 @@ function edit(req, res) {
 };
 
 function remove(req, res) {
-    User.findOne( { name: req.headers.name } )
+    User.findOne( { name: req.params.name } )
     .then(user => {
         if(user === null){
             res.status(401).send({ Error :'User does not exist. ' + req.headers.name})
