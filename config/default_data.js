@@ -86,6 +86,7 @@
 // }
 
 const Season = require('../src/models/season');
+const User = require('../src/models/user');
 
 function addDefaultSeason() {
     Season.findOne( { name: 'Default' } )
@@ -104,6 +105,21 @@ function addDefaultSeason() {
         });
 }
 
+function addTestUser() {
+    User.findOne( { name: 'TestUser' } )
+        .then(founduser => {
+            if(founduser === null){
+                User.create({
+                    name: 'TestUser',
+                    password: 'TestPassword'
+                })
+            } else {
+                founduser.delete()
+                .then(() => addTestUser());
+            }
+        });
+}
+
 function getDefaultSeason() {
     Season.findOne( { name: 'Default' } )
         .then(season => {
@@ -113,5 +129,6 @@ function getDefaultSeason() {
 
 module.exports = {
     addDefaultSeason,
-    getDefaultSeason
+    getDefaultSeason,
+    addTestUser
 }
