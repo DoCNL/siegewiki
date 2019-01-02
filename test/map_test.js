@@ -3,21 +3,10 @@ var app = require('../server'),
     request = require('supertest');
 var expect = chai.expect;
 var SiegeMap = require('../src/models/siegemap');
+var User = require('../src/models/user');
 
-describe('The seasoncontroller can ', function () {
+describe('The mapcontroller can ', function () {
     this.timeout(0);
-
-    it('fetch all maps', function (done) {
-        request(app)
-            .get('/api/siegemaps')
-            .end(function (err, res) {
-                if (err) console.log(err);
-                expect(res.statusCode).to.equal(200);
-                expect(res.body).to.be.an('array');
-                done();
-            })
-    })
-
 
     var user = {
         name: 'MapCreateTest',
@@ -31,6 +20,21 @@ describe('The seasoncontroller can ', function () {
         rankedAvailability: true
     };
 
+    beforeEach(async () => {
+        await SiegeMap.deleteMany({});
+        await User.deleteMany({});
+    })
+
+    it('fetch all maps', function (done) {
+        request(app)
+            .get('/api/siegemaps')
+            .end(function (err, res) {
+                if (err) console.log(err);
+                expect(res.statusCode).to.equal(200);
+                expect(res.body).to.be.an('array');
+                done();
+            })
+    })
 
     it('log in and create a map', function (done) {
         SiegeMap.collection.drop(() => {

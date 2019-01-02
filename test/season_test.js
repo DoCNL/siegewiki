@@ -3,20 +3,10 @@ var app = require('../server'),
     request = require('supertest');
 var expect = chai.expect;
 var Season = require('../src/models/season');
+var User = require('../src/models/user');
 
 describe('The seasoncontroller can ', function () {
     this.timeout(0);
-
-    it('fetch all seasons', function (done) {
-        request(app)
-            .get('/api/seasons')
-            .end(function (err, res) {
-                if (err) console.log(err);
-                expect(res.statusCode).to.equal(200);
-                expect(res.body).to.be.an('array');
-                done();
-            });
-    });
 
     var user = {
         name: 'SeasonCreateTest',
@@ -30,6 +20,21 @@ describe('The seasoncontroller can ', function () {
         year: 2
     };
 
+    beforeEach(async () => {
+        await Season.deleteMany({});
+        await User.deleteMany({});
+    })
+
+    it('fetch all seasons', function (done) {
+        request(app)
+            .get('/api/seasons')
+            .end(function (err, res) {
+                if (err) console.log(err);
+                expect(res.statusCode).to.equal(200);
+                expect(res.body).to.be.an('array');
+                done();
+            });
+    });
 
     it('log in and create a season', function (done) {
         Season.collection.drop(() => {
