@@ -25,7 +25,7 @@ module.exports = (app) => {
     //Season routes
     //
     //get all seasons
-    app.get('/api/season/', SeasonController.getAll);
+    app.get('/api/seasons/', SeasonController.getAll);
         //get all seasons Populated
         //app.get('/api/seasons/populate', SeasonController.getAllPopulated);
     //get season by id via parameter
@@ -43,7 +43,7 @@ module.exports = (app) => {
     //Operator routes
     //
     //get all operators
-    app.get('/api/operator/', OperatorController.getAll);
+    app.get('/api/operators/', OperatorController.getAll);
     //get operator by id via parameter
     app.get('/api/operator/:id', OperatorController.getOneById);
     //create a new operator with 'name, description, imageLink, side'
@@ -57,7 +57,7 @@ module.exports = (app) => {
     //Siegemap routes
     //
     //get all siegemaps
-    app.get('/api/siegemap/', MapController.getAll);
+    app.get('/api/siegemaps/', MapController.getAll);
     //get siegemap by id via parameter
     app.get('/api/siegemap/:id', MapController.getOneById);
     //create a new siegemap with 'name, description, imageLink, ranked'

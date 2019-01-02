@@ -14,7 +14,7 @@ describe('The usercontroller can', function () {
         newPassword: 'nieuwepas'
     };
 
-    it('log in and edit a users password', function (done) {
+    xit('log in and edit a users password', function (done) {
         User.collection.drop(() => {
             var token = 'Bearer ';
             request(app)

@@ -19,8 +19,8 @@ const user = {
 
 describe('The authcontroller can ', function () {
 
-    before((done) => {
-        defData.addTestUser();
-        done();
-    });
+    // before((done) => {
+    //     defData.addTestUser();
+    //     done();
+    // });
 });
